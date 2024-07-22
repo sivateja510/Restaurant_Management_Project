@@ -1,0 +1,41 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class='ordersin'>
+    <h1>Order Details</h1>
+    <div class="order-details-container">
+        
+        <div class="order-info">
+            <h3>Order {{ order.id }}</h3>
+            <p class="customer-name">Customer: {{ order.customer_name }}</p>
+            <p class="order-date">Order Date: {{ order.order_date }}</p>
+            <p class="total-price">Total Price: ${{ order.total_price }}</p>
+            <p class="order-total">Status : {{ order.status }}</p>
+            <p class="waiter-name">Waiter: {{ order.waiter.username }}</p>
+        </div>
+        
+        <div class="order-items-section">
+            <h3>Items:</h3>
+            <ul class="order-items-list">
+                {% for item in order.orderitem_set.all %}
+                    <li class="order-item">
+                        <span class="item-name">{{ item.item.name }}</span> - Quantity: <span class="item-quantity">{{ item.quantity }}</span>
+                    </li>
+                {% empty %}
+                    <li class="empty-list">No items in this order.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="button-container">
+            <form action="{% url 'order_delete' order.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-delete">Delete Order</button>
+            </form>
+            <a href="{% url 'update_order' order.id %}" class="btn btn-update">Update Order</a>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

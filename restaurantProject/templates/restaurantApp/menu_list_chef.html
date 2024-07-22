@@ -1,0 +1,43 @@
+{% extends 'restaurantApp/base.html' %}
+{% block content %}
+{% load static %}
+<div class='menumain'>
+    
+<form id="menu-form" method="post">
+    {% csrf_token %}
+    <div class="menu-container">
+    {% for item in menu_items %}
+        <div class="menu-item" onclick="navigateToUpdateMenuItem({{ item.id }})">
+            {% comment %} <input type="checkbox" name="selected_items" value="{{ item.id }}" id="checkbox-{{ item.id }}"> {% endcomment %}
+            <label for="checkbox-{{ item.id }}">
+                <h3 class="item-name">{{ item.name }}</h3>
+                <p class="item-category">Category: {{ item.category }}</p>
+                <p class="item-description">Description: {{ item.description }}</p>
+                <p class="item-price">Price: {{ item.price }}rs</p>
+            </label>
+        </div>
+    {% empty %}
+        <p class="no-items">No menu items available.</p>
+    {% endfor %}
+    </div>
+    <input type="hidden" name="customer_name" id="customer_name">
+    
+</form>
+</div>
+
+<script>
+    function navigateToUpdateMenuItem(itemId) {
+        window.location.href = `{% url 'update_menu_item' 0 %}`.replace('0', itemId);
+    }
+
+    document.getElementById('menu-form').addEventListener('submit', function(event) {
+        var customerName = prompt("Please enter the customer's name:");
+        if (customerName) {
+            document.getElementById('customer_name').value = customerName;
+        } else {
+            event.preventDefault();
+            alert("Customer name is required to place the order.");
+        }
+    });
+</script>
+{% endblock %}

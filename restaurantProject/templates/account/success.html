@@ -1,0 +1,10 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="login-container">
+        <h1>Sign Up Successful</h1>
+        <p>Welcome to our community! Your sign-up was successful.</p>
+        <a href="{% url 'user_login' %}">Go to Home</a>
+    </div>
+{% endblock %}
+

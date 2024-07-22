@@ -1,0 +1,27 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+{% block content %}
+<div class="order-update-container">
+<form method="post" action="{% url 'update_order' order.id %}">
+    {% csrf_token %}
+
+    <h3>Existing Items</h3>
+    {% for order_item_form in order_item_forms %}
+        <div>
+            {{ order_item_form.instance.item.name }}: 
+            <input type="number" name="quantity_{{ order_item_form.instance.item.id }}" value="{{ order_item_form.instance.quantity }}" min="1">
+        </div>
+    {% endfor %}
+
+    <h3>Add New Items</h3>
+    {% for menu_item in menu_items %}
+        <div>
+            <input type="checkbox" name="add_items" value="{{ menu_item.id }}">
+            {{ menu_item.name }} - ${{ menu_item.price }}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Update Order</button>
+</form>
+</div>
+{% endblock %}

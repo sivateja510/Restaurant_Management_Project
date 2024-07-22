@@ -1,0 +1,20 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="orders-title">Orders</h1>
+<div class='ordersin'>
+    <div class="orders-grid">
+    {% for order in orders %}
+    <div class="order-box">
+        <h3 class="order-id">Order {{ order.id }}</h3>
+        <p class="order-customer">Customer: {{ order.customer_name }}</p>
+        <p class="order-date">Order Date: {{ order.order_date }}</p>
+        <p class="order-total">Total Price: ${{ order.total_price }}</p>
+        <a class="order-details-link" href="{% url 'update_order_status' order.id %}">Update Status</a>
+    </div>
+    {% empty %}
+    <p class="no-orders">No orders available.</p>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'restaurantApp/base.html' %}
+{% block content %}
+{% load static %}
+<div class='body'>
+<div class="login-container">
+    <h2 class="login-title">Login</h2>
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p><a href="{% url 'signup' %}">Signup</a></p>
+    </form>
+</div>
+</div>
+<style>
+    .login-form p input{
+        width:100%;
+        padding:10px;
+        border: 0.5px solid lightblue;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .login-form p{
+        margin-bottom: 15px;
+      }
+      
+      .login-form p label{
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        
+      }
+</style>
+
+
+{% endblock %}

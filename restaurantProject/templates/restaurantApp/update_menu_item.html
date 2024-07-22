@@ -1,0 +1,93 @@
+{% extends 'restaurantApp/base.html' %}
+{% block content %}
+{% load static %}
+<div class="order-update">
+    <h1>Update Menu Item</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+        
+    </form>
+    <div class="action-container">
+        <form method="post" action="{% url 'delete_menu_item' item.id %}" style="margin-top: 20px;">
+            {% csrf_token %}
+            <button type="submit">Delete Menu Item</button>
+        </form>
+        <p><a href="{% url 'menu_lists' %}">Back to Menu Items</a></p>
+    </div>
+    
+    
+    
+</div>
+<style>
+    .order-update {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .order-update h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .order-update form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .order-update form p {
+        margin-bottom: 10px;
+    }
+    
+    .order-update button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .order-update button:hover {
+        background-color: #0056b3;
+    }
+    
+    .order-update a {
+        display: inline-block;
+        margin-top: 20px;
+        text-align: center;
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    .order-update a:hover {
+        text-decoration: underline;
+    }
+    .action-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .action-container form {
+        margin: 0; /* Remove margin to align items properly */
+    }
+    
+    .action-container p {
+        margin: 0; /* Remove margin to align items properly */
+    }
+    .action-container button{
+        background-color:red;
+    }
+    
+</style>
+{% endblock %}

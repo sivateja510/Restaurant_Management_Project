@@ -1,0 +1,25 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="orders-title">Orders</h1>
+<div class='ordersin'>
+    <div class="orders-grid">
+    {% for order in orders %}
+    <div class="order-box">
+        <h3 class="order-id">Order {{ order.id }}</h3>
+        <p class="order-customer">Customer: {{ order.customer_name }}</p>
+        <p class="order-date">Order Date: {{ order.order_date }}</p>
+        <p class="order-total">Total Price: ${{ order.total_price }}</p>
+        <p class="order-total">Status : {{ order.status }}</p>
+        <a class="order-details-link" href="{% url 'order_detail' order.id %}">View Details</a>
+    </div>
+    {% empty %}
+    <p class="no-orders">No orders available.</p>
+    {% endfor %}
+    </div>
+    {% if orders %}
+    <a href="{% url 'print_order_history' %}" class="btn" id='btns'>Print Order History</a>
+    <a href="{% url 'clear_all_orders' %}" class="btn" id='btnsd'>Clear Order Data</a>
+    {% endif %}
+</div>
+{% endblock %}

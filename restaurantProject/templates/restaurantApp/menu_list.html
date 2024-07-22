@@ -1,0 +1,53 @@
+{% extends 'restaurantApp/base.html' %}
+{% block content %}
+{% load static %}
+<div class='menumain'>
+{% comment %} <h1 class="menu-title">Menu Items</h1> {% endcomment %}
+<form id="menu-form" method="post">
+    {% csrf_token %}
+    <div class="menu-container">
+    {% for item in menu_items %}
+        <div class="menu-item" onclick="toggleCheckbox(this)">
+            <input type="checkbox" name="selected_items" value="{{ item.id }}" id="checkbox-{{ item.id }}">
+            <label for="checkbox-{{ item.id }}">
+                <h3 class="item-name">{{ item.name }}</h3>
+                <p class="item-category">Category: {{ item.category }}</p>
+                <p class="item-description">Quantity: {{ item.quantity_sold }}</p>
+                <p class="item-price">Price: ${{ item.price }}</p>
+            </label>
+        </div>
+    {% empty %}
+        <p class="no-items">No menu items available.</p>
+    {% endfor %}
+    </div>
+    <input type="hidden" name="customer_name" id="customer_name">
+    <div class="button-containers">
+        <button type="submit" class="submit-button">Send Order</button>
+    </div>
+</form>
+</div>
+
+<script>
+    function toggleCheckbox(menuItem) {
+        const checkbox = menuItem.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+
+        if (checkbox.checked) {
+            menuItem.classList.add('selected');
+        } else {
+            menuItem.classList.remove('selected');
+        }
+    }
+
+    document.getElementById('menu-form').addEventListener('submit', function(event) {
+        var customerName = prompt("Please enter the customer's name:");
+        if (customerName) {
+            document.getElementById('customer_name').value = customerName;
+        } else {
+            event.preventDefault();
+            alert("Customer name is required to place the order.");
+        }
+    });
+</script>
+{% endblock %}
+

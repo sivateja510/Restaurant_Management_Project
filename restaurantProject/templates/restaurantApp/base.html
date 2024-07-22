@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Restaurant</title>
+    <style>
+        
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #2e3031;
+    color: #fff;
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 20px; */
+  }
+  
+  header h3 {
+    margin: 0px;
+    padding:0px;
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  nav ul li {
+    margin: 0 15px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+  }
+  
+  nav ul li a:hover {
+    background-color: #575757;
+    border-radius: 4px;
+  }
+  
+  
+    </style>
+</head>
+<body>
+    <header>
+        <h3>Restaurant</h3>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    
+                    
+                    {% if request.session.user_groups == 'Owner'  %}
+                    <li><a href="{% url 'menu_list' %}">Menu</a></li>
+                        <li><a href="{% url 'add_menu_item' %}">Add Menu Item</a></li>
+                        <li><a href="{% url 'myorders' %}">My Orders</a></li>
+                        <li><a href="{% url 'order_list' %}">Orders List</a></li>
+                        <li><a href="{% url 'create_order' %}">Create Order</a></li>
+                    {% endif %}
+
+                    {% if request.session.user_groups == 'chef'  %}
+                    <li><a href="{% url 'menu_lists' %}">Menu</a></li>
+                        <li><a href="{% url 'add_menu_item' %}">Add Menu Item</a></li>
+                        <li><a href="{% url 'order_list' %}">Orders List</a></li>
+                        <li><a href="{% url 'accept_order' %}">Accept Order</a></li>
+                    {% endif %}
+                    
+                    {% if request.session.user_groups == 'Waiter' %}
+                    <li><a href="{% url 'menu_list' %}">Menu</a></li>
+                        <li><a href="{% url 'myorders' %}">My Orders</a></li>
+                        <li><a href="{% url 'order_list' %}">Orders List</a></li>
+                        <li><a href="{% url 'create_order' %}">Create Order</a></li>
+                    {% endif %}
+
+                    {% if request.session.user_groups == 'User' %}
+                        <li><a href="{% url 'myorders' %}">My Orders</a></li>
+                        <li><a href="{% url 'create_order' %}">Create Order</a></li>
+                    {% endif %}
+
+                    
+                    
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'user_login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'restaurantApp/base.html' %}
+{% load static %}
+{% block content %}
+<div class='additem'>
+    <h1> Add Menu Items </h1>
+    <div class="containerm">
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Item</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

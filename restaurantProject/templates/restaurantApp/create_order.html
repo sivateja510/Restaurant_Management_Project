@@ -1,0 +1,16 @@
+{% extends 'restaurantApp/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="createmain">
+    <h1 class="create-order-title">Create Order</h1>
+    
+    
+    
+    <form method="post" class="create-order-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="create-order-button">Place Order</button>
+    </form>
+</div>
+{% endblock %}
